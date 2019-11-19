@@ -1,0 +1,420 @@
+--------------------------------------FOLD-0---------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Forest with 100 trees: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Forest with 100 trees: [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+
+------------------------------------------------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Original       : [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Original Model
+**************
+
+Forest with 100 models
+
+--------------------------------------FOLD-1---------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Forest with 100 trees: 
+   Attribute: stato
+     REAL\PRED |   1 |  0 |
+     --------------------------
+             1 | 114 |  7 | 121
+             0 |   7 |  8 |  15
+     --------------------------
+               | 121 | 15 | 136
+     Accuracy: 0.897059
+     Cramer's coefficient: 0.475482
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Forest with 100 trees: [4.8899]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+
+------------------------------------------------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Original       : [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Original Model
+**************
+
+Forest with 100 models
+
+--------------------------------------FOLD-2---------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Forest with 100 trees: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 119 | 2 | 121
+             0 |  11 | 4 |  15
+     -------------------------
+               | 130 | 6 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.381566
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Forest with 100 trees: [4.9351]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+
+------------------------------------------------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Original       : [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Original Model
+**************
+
+Forest with 100 models
+
+--------------------------------------FOLD-3---------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Forest with 100 trees: 
+   Attribute: stato
+     REAL\PRED |   1 |  0 |
+     --------------------------
+             1 | 120 |  1 | 121
+             0 |   6 |  9 |  15
+     --------------------------
+               | 126 | 10 | 136
+     Accuracy: 0.948529
+     Cramer's coefficient: 0.7102
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Forest with 100 trees: [4.9229]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+
+------------------------------------------------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Original       : [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Original Model
+**************
+
+Forest with 100 models
+
+--------------------------------------FOLD-4---------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Forest with 100 trees: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 118 | 3 | 121
+             0 |  11 | 4 |  15
+     -------------------------
+               | 129 | 7 | 136
+     Accuracy: 0.897059
+     Cramer's coefficient: 0.342912
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Forest with 100 trees: [4.9145]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Forest with 100 trees Model
+***************************
+
+Forest with 100 models
+
+------------------------------------------------------------------------------------
+Testing error
+-------------
+
+Number of examples: 136
+Classification Error
+   Default: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 121 | 0 | 121
+             0 |  15 | 0 |  15
+     -------------------------
+               | 136 | 0 | 136
+     Accuracy: 0.889706
+     Cramer's coefficient: 0
+
+   Original: 
+   Attribute: stato
+     REAL\PRED |   1 | 0 |
+     -------------------------
+             1 | 120 | 1 | 121
+             0 |  12 | 3 |  15
+     -------------------------
+               | 132 | 4 | 136
+     Accuracy: 0.904412
+     Cramer's coefficient: 0.355487
+
+Weighted mean squared error (MSE) for Nominal Attributes (Weights [5.038])
+   Default        : [0.9888]
+   Original       : [4.9435]
+
+Default Model
+*************
+
+[1] [485.0]: 546
+
+Original Model
+**************
+
+Forest with 100 models
+
