@@ -273,9 +273,9 @@ class ClusSSLOptimizer(Optimizer):
         best = dict()
         for (heuristic, iter_un, iter_su) in [(x, a, b) for x in heuristics
                                               for a in range(min_iter_unsup, max_iter_unsup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 1))
+                                                             round((max_iter_unsup - min_iter_unsup) / 1)) # da mettere 3 al posto di 1
                                               for b in range(min_iter_sup, max_iter_sup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 1))]:
+                                                             round((max_iter_unsup - min_iter_unsup) / 1))]: # da mettere 3 al posto di 1
             metric = []
             for i in range(self.K):
                 test_X = self.val_Xs[i].copy()
