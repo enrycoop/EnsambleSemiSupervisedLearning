@@ -10,8 +10,10 @@ import conf_models
 
 
 class SemiSupervisedEnsambleClassifier(object):
+
     def __init__(self,labeledPath, unlabeledPath, K=5, val_split=0.33,arff=True):
         self.dataPreparator = DataPreparator(labeledPath, unlabeledPath)
+        self.K = K
         train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = self.dataPreparator.createSperimentationData(K=K, val_split=val_split,arff=arff)
         self.train_Xs = train_Xs.copy()
         self.val_Xs = val_Xs.copy()
@@ -21,18 +23,13 @@ class SemiSupervisedEnsambleClassifier(object):
         self.test_ys = test_ys.copy()
         self.ensembleManager = EnsembleManager(train_Xs, val_Xs, train_ys, val_ys, self.dataPreparator.indexer)
 
-
     def fit(self):
         ensemble = self.ensembleManager
         ensemble.find_best_conf()
-        ensemble.learn_classifiers(0)
-        X = ensemble.get_results(self.val_Xs[0])
-        print(X)
-        print(f'lung X:{len(X)}\nlung y:{len(self.val_ys[0])}')
-        test_X = ensemble.get_results(self.test_Xs[0])
-        print(test_X)
-        print(f'lung X:{len(test_X)}\nlung y:{len(self.test_ys[0])}')
-
+        for i in range(self.K):
+            ensemble.learn_classifiers(i)
+            X = ensemble.get_results(self.val_Xs[i])
+            test_X = ensemble.get_results(self.test_Xs[i])
 
     def predict(self):
         pass

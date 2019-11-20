@@ -361,11 +361,8 @@ class MetaOptimizer(Optimizer):
     def fit(self):
         pass
 
+
 if __name__ == '__main__':
     prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
     train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
     opt = SusiOptimizer(train_Xs, val_Xs, train_ys, val_ys)
-
-    conf = opt.fit()
-    model = opt.learn(0,conf[0])
-    print(model.predict(test_Xs[0]))
