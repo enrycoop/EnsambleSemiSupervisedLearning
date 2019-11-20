@@ -317,7 +317,7 @@ class ClusSSLOptimizer(Optimizer):
                         'external_libraries/conf.s'])
         self.fix()
 
-        self.tree = eval("conf_models.ensemble_{}".format(conf[2]))
+        self.tree = eval("conf_models.ensemble")
         return self.tree
 
     def predict(self,X):

@@ -16,11 +16,11 @@ Weights = Normalize
 Heuristic = GainRatio
 
 [Ensemble]
-Iterations = 11
+Iterations = 10
 EnsembleMethod = RForest
 
 [SemiSupervised]
-Iterations = 6
+Iterations = 5
 ConfidenceMeasure = RandomGaussian
 UnlabeledData = resources/unlabeled.arff
 SemiSupervisedMethod = PCT
