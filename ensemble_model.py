@@ -62,7 +62,7 @@ class EnsembleManager(object):
 if __name__ == '__main__':
     prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
     train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
-    ensemble = EnsambleManager(train_Xs, val_Xs, train_ys, val_ys, prep.indexer)
+    ensemble = EnsembleManager(train_Xs, val_Xs, train_ys, val_ys, prep.indexer)
     ensemble.find_best_conf()
     ensemble.learn_classifiers(0)
     X = ensemble.get_results(val_Xs[0])
