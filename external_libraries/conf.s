@@ -3,8 +3,8 @@ RandomSeed = 1
 Verbose = 0
 
 [Data]
-File = 5_fold/train4.arff
-TestSet = 5_fold/test4.arff
+File = 5_fold/train2.arff
+TestSet = 5_fold/test2.arff
 
 [Attributes]
 Target = 14
@@ -13,7 +13,7 @@ Clustering = 14
 Weights = Normalize
 
 [Tree]
-Heuristic = VarianceReduction
+Heuristic = GainRatio
 
 [Ensemble]
 Iterations = 10

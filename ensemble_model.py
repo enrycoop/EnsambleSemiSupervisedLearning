@@ -48,10 +48,10 @@ class EnsambleManager(object):
 
     def get_results(self, X):
         meta_X = []
-        meta_X.append(self.knn_model.predict(self.X))
-        meta_X.append(self.pom_model.predict(self.X))
-        #meta_X.append(self.susi_model.predict(self.X))
-        meta_X.append(self.clus.predict(self.X))
+        meta_X.append(self.knn_model.predict(X))
+        meta_X.append(self.pom_model.predict(X))
+        #meta_X.append(self.susi_model.predict(X))
+        meta_X.append(self.clus.predict(X))
         meta_X = list(np.array(meta_X).T)
         return meta_X
 
