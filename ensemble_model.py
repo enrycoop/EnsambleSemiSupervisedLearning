@@ -68,7 +68,6 @@ if __name__ == '__main__':
     X = ensemble.get_results(val_Xs[0])
     print(X)
     print(f'lung X:{len(X)}\nlung y:{len(val_ys[0])}')
-
     test_X = ensemble.get_results(test_Xs[0])
     print(test_X)
     print(f'lung X:{len(test_X)}\nlung y:{len(test_ys[0])}')
