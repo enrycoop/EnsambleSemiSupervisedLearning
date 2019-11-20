@@ -246,6 +246,9 @@ class ClusSSLOptimizer(Optimizer):
                 file.write(str(line).replace("''", "'"))
         with open('external_libraries/conf_models.py','r') as file:
             lines = file.readlines()
+        for i in range(len(lines)):
+            if "ensemble_" in lines[i]:
+                lines[i] = "def ensemble(xs):\n"
         with open('conf_models.py','w') as file:
                 file.writelines(lines)
         os.remove('external_libraries/conf_trees.py')
@@ -260,8 +263,8 @@ class ClusSSLOptimizer(Optimizer):
             if 'ensemble' in line:
                 return int(line.split('_')[1].split('(')[0])
 
-    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=5, max_iter_unsup=50,
-            min_iter_sup=10, max_iter_sup=50, verbose=True):
+    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=5, max_iter_unsup=6,
+            min_iter_sup=10, max_iter_sup=11, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -270,9 +273,9 @@ class ClusSSLOptimizer(Optimizer):
         best = dict()
         for (heuristic, iter_un, iter_su) in [(x, a, b) for x in heuristics
                                               for a in range(min_iter_unsup, max_iter_unsup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 3))
+                                                             round((max_iter_unsup - min_iter_unsup) / 1))
                                               for b in range(min_iter_sup, max_iter_sup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 3))]:
+                                                             round((max_iter_unsup - min_iter_unsup) / 1))]:
             metric = []
             for i in range(self.K):
                 test_X = self.val_Xs[i].copy()
@@ -283,7 +286,7 @@ class ClusSSLOptimizer(Optimizer):
                                 'external_libraries/conf.s'])
                 self.fix()
 
-                one_accuracy,zero_accuracy, final_accuracy, metric_value = self.test(test_X,test_y,self.read_number())
+                one_accuracy,zero_accuracy, final_accuracy, metric_value = self.test(test_X,test_y)
 
                 # accuracy calculation
                 if verbose:
@@ -320,9 +323,9 @@ class ClusSSLOptimizer(Optimizer):
     def predict(self,X):
         return [float(self.tree(x)[0]) for x in X]
 
-    def test(self, test_X, test_y, length):
+    def test(self, test_X, test_y):
         X = self.indexer.numericToNominal(test_X.copy())
-        tree = eval("conf_models.ensemble_{}".format(length))
+        tree = eval("conf_models.ensemble")
 
         y_pred = [float(tree(x)[0]) for x in X]
         # evaluating by accuracy #

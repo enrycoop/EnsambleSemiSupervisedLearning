@@ -14,8 +14,8 @@ def aggregate(predictions):
     return [max(counts[j], key=lambda pred: counts[j][pred]) for j in range(m)]
 
 
-def ensemble_25(xs):
-	base_predictions = [None for _ in range(25)]
+def ensemble(xs):
+	base_predictions = [None for _ in range(10)]
 	for i in range(len(base_predictions)):
 		tree = eval("conf_trees.tree_{}".format(i + 1))
 		base_predictions[i] = tree(xs)
