@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="ensamble_model" version="4">
+  <OBJECT>
+    <ID name="ensamble_model" mc="Standard.Package" uid="250b1789-9802-4daf-9ee5-b9f1cc0ba0b8"/>
+    <PID name="ensemblesemisupervisedlearning" mc="Standard.Package" uid="599fbd2f-0f67-476b-92f6-a07b248e3bd2"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[ensamble_model]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="SSEnsamble" mc="Standard.Class" uid="98575fef-f723-4899-87f7-e5a85178c72e"/>
+        <COMPID name="MetaClassifierDataPreparator" mc="Standard.Class" uid="3e9f6f93-d88b-4b3f-b5c1-0d98e98448dc"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
