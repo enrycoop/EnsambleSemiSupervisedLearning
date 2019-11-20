@@ -10,6 +10,7 @@ import conf_models
 
 class Optimizer(object):
     def __init__(self, train_Xs, val_Xs, train_ys, val_ys):
+        super().__init__()
         self.train_Xs = train_Xs.copy()
         self.val_Xs = val_Xs.copy()
         self.train_ys = train_ys.copy()
@@ -25,8 +26,8 @@ class KnnOptimizer(Optimizer):
         super().__init__(train_Xs, val_Xs, train_ys, val_ys)
 
     def learn(self, i, conf):
-        train_X = self.train_Xs[i].copy()
-        train_y = self.train_ys[i].copy()
+        train_X = self.val_Xs[i].copy()
+        train_y = self.val_ys[i].copy()
         return label_propagation.LabelSpreading(kernel='knn', n_neighbors=conf[0], alpha=conf[1]).fit(train_X,train_y)
 
     def learnFromSamples(self,X, y, conf):
@@ -142,8 +143,8 @@ class PomOptimizer(Optimizer):
         return conf
 
     def learn(self,i,conf):
-        train_X = self.train_Xs[i].copy()
-        train_y = self.train_ys[i].copy()
+        train_X = self.val_Xs[i].copy()
+        train_y = self.val_ys[i].copy()
         return NaiveBayes.from_samples(conf, train_X, train_y, verbose=False)
 
 
@@ -217,8 +218,8 @@ class SusiOptimizer(Optimizer):
         return conf
 
     def learn(self,i,conf):
-        train_X = self.train_Xs[i].copy()
-        train_y = self.train_ys[i].copy()
+        train_X = self.val_Xs[i].copy()
+        train_y = self.val_ys[i].copy()
         return susi.SOMClassifier(
                     n_rows=conf[0],
                     n_columns=len(train_X[0]),
@@ -309,7 +310,7 @@ class ClusSSLOptimizer(Optimizer):
         return conf
 
     def learn(self,i, heuristic, unsup, sup):
-        self.prepare_conf(i,heuristic,unsup,sup)
+        self.prepare_conf(i,heuristic,unsup,sup,train=False)
         subprocess.run(['java', '-jar', 'external_libraries/clusSSL.jar', '-ssl', '-forest',
                         'external_libraries/conf.s'])
         self.fix()
@@ -334,18 +335,30 @@ class ClusSSLOptimizer(Optimizer):
         zero = test_y.count(0.0)
         return division(len(ones), one),division(len(zeros), zero),division(len(nc), len(y_pred)),avg([division(len(ones), one), division(len(zeros), zero)])
 
-    def prepare_conf(self, i, heuristic, unsup, sup):
+    def prepare_conf(self, i, heuristic, unsup, sup, train=True):
         # changing train and test file into dataset
-        with open('external_libraries/conf.s', 'r') as file:
-            first = file.readlines()
-        first[first.index('[Data]\n') + 1] = f"File = {self.K}_fold/train{i}.arff\n"
-        first[first.index('[Data]\n') + 2] = f"TestSet = {self.K}_fold/test{i}.arff\n"
-        first[first.index('[Tree]\n') + 1] = f"Heuristic = {heuristic}\n"
-        first[first.index('[Ensemble]\n') + 1] = f"Iterations = {sup}\n"
-        first[first.index('[SemiSupervised]\n') + 1] = f"Iterations = {unsup}\n"
+        if train:
+            with open('external_libraries/conf.s', 'r') as file:
+                first = file.readlines()
+            first[first.index('[Data]\n') + 1] = f"File = {self.K}_fold/train{i}.arff\n"
+            first[first.index('[Data]\n') + 2] = f"TestSet = {self.K}_fold/test{i}.arff\n"
+            first[first.index('[Tree]\n') + 1] = f"Heuristic = {heuristic}\n"
+            first[first.index('[Ensemble]\n') + 1] = f"Iterations = {sup}\n"
+            first[first.index('[SemiSupervised]\n') + 1] = f"Iterations = {unsup}\n"
 
-        with open('external_libraries/conf.s', 'w') as file:
-            file.writelines(first)
+            with open('external_libraries/conf.s', 'w') as file:
+                file.writelines(first)
+        else:
+            with open('external_libraries/conf.s', 'r') as file:
+                first = file.readlines()
+            first[first.index('[Data]\n') + 1] = f"File = {self.K}_fold/validation_train{i}.arff\n"
+            first[first.index('[Data]\n') + 2] = f"TestSet = {self.K}_fold/validation_test{i}.arff\n"
+            first[first.index('[Tree]\n') + 1] = f"Heuristic = {heuristic}\n"
+            first[first.index('[Ensemble]\n') + 1] = f"Iterations = {sup}\n"
+            first[first.index('[SemiSupervised]\n') + 1] = f"Iterations = {unsup}\n"
+
+            with open('external_libraries/conf.s', 'w') as file:
+                file.writelines(first)
 
 
 class MetaOptimizer(Optimizer):
@@ -358,6 +371,18 @@ class MetaOptimizer(Optimizer):
     def fit(self):
         pass
 
+
+class MetaClassifierDataPreparator(Optimizer):
+    def __init__(self, train_Xs, val_Xs, train_ys, val_ys, test_Xs, test_ys):
+        super().__init__(train_Xs, val_Xs, train_ys, val_ys)
+        self.test_Xs = test_Xs.copy()
+        self.test_ys = test_ys.copy()
+
+    def fit(self):
+        pass
+
+    def getDataset(self):
+        pass
 
 if __name__ == '__main__':
     prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
