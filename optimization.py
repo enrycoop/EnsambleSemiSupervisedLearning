@@ -31,7 +31,7 @@ class KnnOptimizer(Optimizer):
         train_y = self.train_ys[i].copy()
         return label_propagation.LabelSpreading(kernel='knn', n_neighbors=conf[0], alpha=conf[1]).fit(train_X,train_y)
 
-    def fit(self, min_k=1, max_k=9, verbose=True):
+    def fit(self, min_k=1, max_k=2, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -43,9 +43,6 @@ class KnnOptimizer(Optimizer):
             for i in range(self.K):
                 train_X = self.train_Xs[i].copy()
                 train_y = self.train_ys[i].copy()
-
-                print(len(train_X))
-                print(len(train_y))
 
                 test_X = self.val_Xs[i].copy()
                 test_y = self.val_ys[i].copy()
@@ -81,7 +78,7 @@ class KnnOptimizer(Optimizer):
         if verbose:
             print('-----------------------------------RESUME KNN OPTIMIZATION------------------------------------')
             print(f"best n: {conf[0]} - best alpha: {conf[1]}")
-
+        print('knn learned')
         return conf
 
 
@@ -141,6 +138,7 @@ class PomOptimizer(Optimizer):
             print(f"best n: {conf}")
 
         # building final model
+        print('pom learned')
         return conf
 
     def learn(self,i,conf):
@@ -215,7 +213,7 @@ class SusiOptimizer(Optimizer):
         if verbose:
             print('-----------------------------------RESUME SUSI OPTIMIZATION------------------------------------')
             print(f"best rows: {conf[0]} - best uns_it: {conf[1]} - best su_it: {conf[2]}")
-
+        print('susi learned')
         return conf
 
     def learn(self,i,conf):
@@ -253,7 +251,7 @@ class ClusSSLOptimizer(Optimizer):
         os.remove('external_libraries/conf_trees.py')
         os.remove('external_libraries/conf_models.py')
 
-        print('fixato')
+        print('clus learned')
 
     def read_number(self):
         with open('conf_models.py', 'r') as file:
