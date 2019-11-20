@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="ensemblesemisupervisedlearning" version="4">
+  <OBJECT>
+    <ID name="ensemblesemisupervisedlearning" mc="Standard.Package" uid="599fbd2f-0f67-476b-92f6-a07b248e3bd2"/>
+    <PID name="EnsembleSemiSupervisedLearning" mc="Standard.Project" uid="0cf16e72-a259-4296-b814-f3cd07367b74"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[ensemblesemisupervisedlearning]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="optimization" mc="Standard.Package" uid="99e685f5-8314-459e-98a2-290b2d7c9b50"/>
+        <COMPID name="data_preparation" mc="Standard.Package" uid="5b88fc54-c02b-40f6-8f30-e57c5c50bc5d"/>
+        <COMPID name="utilities" mc="Standard.Package" uid="7125e7ba-13bc-4169-abf3-221504752995"/>
+        <COMPID name="ensamble_model" mc="Standard.Package" uid="250b1789-9802-4daf-9ee5-b9f1cc0ba0b8"/>
+        <COMPID name="List()" mc="Standard.DataType" uid="9d834471-3d91-4330-8848-93efac38d614"/>
+        <COMPID name="List(List())" mc="Standard.DataType" uid="97312186-3da1-447f-bf6f-52bed7888296"/>
+        <COMPID name="List(List(List()))" mc="Standard.DataType" uid="25550184-2747-4a82-9c5d-4abc388c3c58"/>
+        <COMPID name="Model" mc="Standard.DataType" uid="f88435a7-13d2-44fe-92d3-1ce193db2e17"/>
+        <COMPID name="touple" mc="Standard.DataType" uid="d1119a03-45e5-48c3-ba8c-c7ac6907880b"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="ensemblesemisupervisedlearning Class diagram" mc="Standard.ClassDiagram" uid="ded02c0e-80ab-45ae-ba17-fb699acf74e9"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>

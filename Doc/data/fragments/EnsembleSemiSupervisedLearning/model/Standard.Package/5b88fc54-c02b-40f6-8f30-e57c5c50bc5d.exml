@@ -1,0 +1,124 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="data_preparation" version="4">
+  <OBJECT>
+    <ID name="data_preparation" mc="Standard.Package" uid="5b88fc54-c02b-40f6-8f30-e57c5c50bc5d"/>
+    <PID name="ensemblesemisupervisedlearning" mc="Standard.Package" uid="599fbd2f-0f67-476b-92f6-a07b248e3bd2"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[data_preparation]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="DataPreparator" mc="Standard.Class" uid="a79c7af2-3c82-492e-af24-4778f992a742"/>
+        <COMPID name="Normalizer" mc="Standard.Class" uid="0d22fa72-4198-4046-a904-5fa179d6b5d4"/>
+        <COMPID name="NominalIndexer" mc="Standard.Class" uid="7b31978c-fc80-4ae1-949d-80bcef24eb8f"/>
+        <OBJECT>
+          <ID name="extractXy(path, sep=',', str=&quot;'&quot;, missing_values='?', arff=True)" mc="Standard.InformationItem" uid="fdfc0e65-c027-4af9-b263-8c0374779a64"/>
+          <ATTRIBUTES>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[extractXy(path, sep=',', str="'", missing_values='?', arff=True)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="b7a86be5-4e59-40f9-8596-a68609b1e609"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[estrae i vettori X e y, rispettivamente delle feature e delle etichette.]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="KFoldBalancer(path, K=5, arff=True)" mc="Standard.InformationItem" uid="b067648d-0ff1-4cac-bde7-4be9142d1f72"/>
+          <ATTRIBUTES>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[KFoldBalancer(path, K=5, arff=True)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="a1d4fce9-7c7b-4afb-b839-a2b8b01fdfb5"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[Questa funzione spitta un dato file in K train e test fold in modo da effettuare una k-fold cross validation. 
+Le due classi sono etichettate con 1 e 0, quindi facendo attenzione che vi sia lo stesso numero di 1 e di 0 nelle fold.]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="validationSplitBalanced(path, split=0.33, arff=True)" mc="Standard.InformationItem" uid="fbaf4c67-c0f2-4a35-8ca3-5f4e2d2809e4"/>
+          <ATTRIBUTES>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[validationSplitBalanced(path, split=0.33, arff=True)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <COMP relation="Descriptor">
+              <OBJECT>
+                <ID name="" mc="Infrastructure.Note" uid="8b6e070d-77fe-452c-b436-4a6ad483e5c7"/>
+                <ATTRIBUTES>
+                  <ATT name="Content"><![CDATA[La funzione splitta un dato file in train e test file in modo da effettuare una cross validation.
+Specificare la percentuale da usare per il test tramite un numero compreso tra (0.0,1.0).]]></ATT>
+                  <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
+                  <ATT name="Name"></ATT>
+                  <ATT name="status">1970354901745664</ATT>
+                </ATTRIBUTES>
+                <DEPENDENCIES>
+                  <LINK relation="Model">
+                    <FOREIGNID name="description" mc="Infrastructure.NoteType" uid="00000000-0000-3e81-0000-000000000000"/>
+                  </LINK>
+                </DEPENDENCIES>
+              </OBJECT>
+            </COMP>
+          </DEPENDENCIES>
+        </OBJECT>
+        <OBJECT>
+          <ID name="boxplot(lists, labels=None, fontsize=15)" mc="Standard.InformationItem" uid="3b0632e9-f60d-4b95-9226-74bb506aa1a2"/>
+          <ATTRIBUTES>
+            <ATT name="IsAbstract">false</ATT>
+            <ATT name="IsLeaf">false</ATT>
+            <ATT name="IsRoot">false</ATT>
+            <ATT name="Visibility">Public</ATT>
+            <ATT name="Name"><![CDATA[boxplot(lists, labels=None, fontsize=15)]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES></DEPENDENCIES>
+        </OBJECT>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
