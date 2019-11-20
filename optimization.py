@@ -372,17 +372,30 @@ class MetaOptimizer(Optimizer):
         pass
 
 
-class MetaClassifierDataPreparator(Optimizer):
-    def __init__(self, train_Xs, val_Xs, train_ys, val_ys, test_Xs, test_ys):
-        super().__init__(train_Xs, val_Xs, train_ys, val_ys)
+class MetaClassifierDataPreparator(object):
+    def __init__(self, labeledPath, unlabeledPath):
+        prep = DataPreparator(labeledPath,unlabeledPath)
+        train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
+        self.train_Xs = train_Xs.copy()
+        self.val_Xs= val_Xs.copy()
         self.test_Xs = test_Xs.copy()
+        self.train_ys = train_ys.copy()
+        self.val_ys = val_ys.copy()
         self.test_ys = test_ys.copy()
+        self.knn = KnnOptimizer(train_Xs, val_Xs, train_ys, val_ys)
+        self.pom = PomOptimizer(train_Xs, val_Xs, train_ys, val_ys)
+        self.susi = SusiOptimizer(train_Xs, val_Xs, train_ys, val_ys)
+        self.clus = ClusSSLOptimizer(train_Xs, val_Xs, train_ys, val_ys, prep.indexer)
 
-    def fit(self):
+    def find_best_conf(self):
+        self.knn_conf = self.knn.fit()
+        self.pom_conf = self.pom.fit()
+        self.susi_conf = self.susi.fit()
+        self.clus_conf = self.clus.fit()
+
+    def get_dataset(self):
         pass
 
-    def getDataset(self):
-        pass
 
 if __name__ == '__main__':
     prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
