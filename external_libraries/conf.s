@@ -3,8 +3,8 @@ RandomSeed = 1
 Verbose = 0
 
 [Data]
-File = 5_fold/train2.arff
-TestSet = 5_fold/test2.arff
+File = 5_fold/train0.arff
+TestSet = 5_fold/test0.arff
 
 [Attributes]
 Target = 14

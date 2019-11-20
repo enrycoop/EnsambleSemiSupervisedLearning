@@ -53,6 +53,9 @@ class EnsambleManager(object):
         #meta_X.append(self.susi_model.predict(X))
         meta_X.append(self.clus.predict(X))
         meta_X = list(np.array(meta_X).T)
+        ret_list = []
+        for x in meta_X:
+            ret_list.append(list(x))
         return meta_X
 
 
@@ -64,7 +67,10 @@ if __name__ == '__main__':
     ensemble.learn_classifiers(0)
     X = ensemble.get_results(val_Xs[0])
     print(X)
+    print(f'lung X:{X}\nlung y:{val_ys[0]}')
+
     test_X = ensemble.get_results(test_Xs[0])
     print(test_X)
+    print(f'lung X:{test_X}\nlung y:{test_ys[0]}')
 
 
