@@ -38,25 +38,25 @@ class EnsembleManager(object):
         self.knn_conf = self.knn.fit(verbose=False)
         self.pom_conf = self.pom.fit(verbose=False)
         #self.susi_conf = self.susi.fit(verbose=False)
-        self.clus_conf = self.clus.fit()
+        #self.clus_conf = self.clus.fit()
 
     def learn_classifiers(self, i):
         self.knn_model = self.knn.learn(i, self.knn_conf)
         self.pom_model = self.pom.learn(i, self.pom_conf)
         #self.susi_model = self.susi.learn(i, self.susi_conf)
-        self.clus.learn(i, self.clus_conf)
+        #self.clus.learn(i, self.clus_conf)
 
     def get_results(self, X):
         meta_X = []
         meta_X.append(self.knn_model.predict(X))
         meta_X.append(self.pom_model.predict(X))
         #meta_X.append(self.susi_model.predict(X))
-        meta_X.append(self.clus.predict(X))
+        #meta_X.append(self.clus.predict(X))
         meta_X = list(np.array(meta_X).T)
         ret_list = []
         for x in meta_X:
             ret_list.append(list(x))
-        return meta_X
+        return ret_list
 
 
 if __name__ == '__main__':
@@ -67,10 +67,10 @@ if __name__ == '__main__':
     ensemble.learn_classifiers(0)
     X = ensemble.get_results(val_Xs[0])
     print(X)
-    print(f'lung X:{X}\nlung y:{val_ys[0]}')
+    print(f'lung X:{len(X)}\nlung y:{len(val_ys[0])}')
 
     test_X = ensemble.get_results(test_Xs[0])
     print(test_X)
-    print(f'lung X:{test_X}\nlung y:{test_ys[0]}')
+    print(f'lung X:{len(test_X)}\nlung y:{len(test_ys[0])}')
 
 
