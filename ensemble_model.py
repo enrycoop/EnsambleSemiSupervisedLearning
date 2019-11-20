@@ -9,12 +9,30 @@ from optimization import *
 import conf_models
 
 
-class SSEnsamble(object):
-    def __init__(self):
-        pass
+class SemiSupervisedEnsambleClassifier(object):
+    def __init__(self,labeledPath, unlabeledPath, K=5, val_split=0.33,arff=True):
+        self.dataPreparator = DataPreparator(labeledPath, unlabeledPath)
+        train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = self.dataPreparator.createSperimentationData(K=K, val_split=val_split,arff=arff)
+        self.train_Xs = train_Xs.copy()
+        self.val_Xs = val_Xs.copy()
+        self.train_ys = train_ys.copy()
+        self.val_ys = val_ys.copy()
+        self.test_Xs = test_Xs.copy()
+        self.test_ys = test_ys.copy()
+        self.ensembleManager = EnsembleManager(train_Xs, val_Xs, train_ys, val_ys, self.dataPreparator.indexer)
+
 
     def fit(self):
-        pass
+        ensemble = self.ensembleManager
+        ensemble.find_best_conf()
+        ensemble.learn_classifiers(0)
+        X = ensemble.get_results(self.val_Xs[0])
+        print(X)
+        print(f'lung X:{len(X)}\nlung y:{len(self.val_ys[0])}')
+        test_X = ensemble.get_results(self.test_Xs[0])
+        print(test_X)
+        print(f'lung X:{len(test_X)}\nlung y:{len(self.test_ys[0])}')
+
 
     def predict(self):
         pass
@@ -60,16 +78,8 @@ class EnsembleManager(object):
 
 
 if __name__ == '__main__':
-    prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
-    train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
-    ensemble = EnsembleManager(train_Xs, val_Xs, train_ys, val_ys, prep.indexer)
-    ensemble.find_best_conf()
-    ensemble.learn_classifiers(0)
-    X = ensemble.get_results(val_Xs[0])
-    print(X)
-    print(f'lung X:{len(X)}\nlung y:{len(val_ys[0])}')
-    test_X = ensemble.get_results(test_Xs[0])
-    print(test_X)
-    print(f'lung X:{len(test_X)}\nlung y:{len(test_ys[0])}')
+    ssEnsamble = SemiSupervisedEnsambleClassifier('resources/unlabeled.arff', 'resources/labeled.arff')
+    ssEnsamble.fit()
+
 
 

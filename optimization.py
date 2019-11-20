@@ -154,8 +154,7 @@ class SusiOptimizer(Optimizer):
     def __init__(self, train_Xs, val_Xs, train_ys, val_ys):
         super().__init__(train_Xs, val_Xs, train_ys, val_ys)
 
-    def fit(self, min_rows=1, max_rows=20, min_iter_unsup=100, max_iter_unsup=500, min_iter_sup=100, max_iter_sup=500,
-            verbose=True):
+    def fit(self, min_rows=1, max_rows=20, min_iter_unsup=100, max_iter_unsup=500, min_iter_sup=100, max_iter_sup=500, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -263,8 +262,7 @@ class ClusSSLOptimizer(Optimizer):
             if 'ensemble' in line:
                 return int(line.split('_')[1].split('(')[0])
 
-    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=5, max_iter_unsup=6,
-            min_iter_sup=10, max_iter_sup=11, verbose=True):
+    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=5, max_iter_unsup=6, min_iter_sup=10, max_iter_sup=11, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -366,7 +364,8 @@ class MetaOptimizer(Optimizer):
 if __name__ == '__main__':
     prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
     train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
-    opt = ClusSSLOptimizer(train_Xs, val_Xs, train_ys, val_ys, prep.indexer)
+    opt = SusiOptimizer(train_Xs, val_Xs, train_ys, val_ys)
+
     conf = opt.fit()
-    opt.learn(0,conf[0],conf[1],conf[2])
-    print(opt.predict(test_Xs[0]))
+    model = opt.learn(0,conf[0])
+    print(model.predict(test_Xs[0]))
