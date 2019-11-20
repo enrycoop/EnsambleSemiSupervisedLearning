@@ -23,7 +23,7 @@ class SSEnsamble(object):
         pass
 
 
-class EnsambleManager(object):
+class EnsembleManager(object):
     def __init__(self, train_Xs, val_Xs, train_ys, val_ys, indexer):
         self.train_Xs = train_Xs.copy()
         self.val_Xs = val_Xs.copy()
