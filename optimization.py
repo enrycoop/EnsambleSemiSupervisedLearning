@@ -44,6 +44,9 @@ class KnnOptimizer(Optimizer):
                 train_X = self.train_Xs[i].copy()
                 train_y = self.train_ys[i].copy()
 
+                print(len(train_X))
+                print(len(train_y))
+
                 test_X = self.val_Xs[i].copy()
                 test_y = self.val_ys[i].copy()
 

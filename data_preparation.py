@@ -40,6 +40,7 @@ class DataPreparator(object):
         self.un_X = un_X.copy()
         self.un_y = un_y.copy()
 
+
         train_Xs = []
         val_Xs = []
         test_Xs = []
@@ -49,17 +50,21 @@ class DataPreparator(object):
         for i in range(K):
             # train data
             X, y = extractXy(f'{K}_fold/train{i}.arff')
-            train_Xs.append(self.indexer.nominalToNumeric(X+un_X).copy())
+            train_Xs.append(self.indexer.nominalToNumeric(X=X+un_X).copy())
+            print(f'{self.__class__}: train :{len(X+un_X)}-{len(y+un_y)}')
             train_ys.append((y+un_y).copy())
 
             # test data
             X, y = extractXy(f'{K}_fold/test{i}.arff')
-            test_Xs.append(self.indexer.nominalToNumeric(X).copy())
+            test_Xs.append(self.indexer.nominalToNumeric(X=X).copy())
+            print(f'{self.__class__}: test :{len(X)}-{len(y)}')
             test_ys.append(y.copy())
+
 
             # validation data
             X, y = extractXy(f'{K}_fold/validation_train{i}.arff')
-            val_Xs.append(self.indexer.nominalToNumeric(X).copy())
+            val_Xs.append(self.indexer.nominalToNumeric(X=X).copy())
+            print(f'{self.__class__}: val :{len(X)}-{len(y)}')
             val_ys.append(y.copy())
 
         return train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys
