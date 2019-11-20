@@ -31,9 +31,6 @@ class KnnOptimizer(Optimizer):
         train_y = self.train_ys[i].copy()
         return label_propagation.LabelSpreading(kernel='knn', n_neighbors=conf[0], alpha=conf[1]).fit(train_X,train_y)
 
-    def learnFromSamples(self,X, y, conf):
-        return label_propagation.LabelSpreading(kernel='knn', n_neighbors=conf[0], alpha=conf[1]).fit(X,y)
-
     def fit(self, min_k=1, max_k=9, verbose=True):
         acc_ones = []
         acc_zeros = []
@@ -310,13 +307,13 @@ class ClusSSLOptimizer(Optimizer):
         print('building final model for CLUS...')
         return conf
 
-    def learn(self,i, heuristic, unsup, sup):
-        self.prepare_conf(i,heuristic,unsup,sup,train=False)
+    def learn(self,i, conf):
+        self.prepare_conf(i,conf[0],conf[1],conf[2])
         subprocess.run(['java', '-jar', 'external_libraries/clusSSL.jar', '-ssl', '-forest',
                         'external_libraries/conf.s'])
         self.fix()
 
-        self.tree = eval("conf_models.ensemble_{}".format(sup))
+        self.tree = eval("conf_models.ensemble_{}".format(conf[2]))
         return self.tree
 
     def predict(self,X):

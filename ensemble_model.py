@@ -8,6 +8,20 @@ from sklearn.semi_supervised import label_propagation
 from optimization import *
 
 
+class SSEnsamble(object):
+    def __init__(self):
+        pass
+
+    def fit(self):
+        pass
+
+    def predict(self):
+        pass
+
+    def save_model(self):
+        pass
+
+
 class MetaClassifierDataPreparator(object):
     def __init__(self, labeledPath, unlabeledPath):
         prep = DataPreparator(labeledPath,unlabeledPath)
@@ -35,22 +49,21 @@ class MetaClassifierDataPreparator(object):
         self.susi_model = self.susi.learn(i,self.susi_conf)
         self.clus.learn(i,self.clus_conf)
 
-    def get_dataset(self,):
-        pass
+    def get_dataset(self):
+        meta_X = []
+
+        meta_X.append(self.knn_model.predict(self.val_Xs))
+        meta_X.append(self.pom_model.predict(self.val_Xs))
+        meta_X.append(self.susi_model.predict(self.val_Xs))
+        meta_X.append(self.clus.predict(self.val_Xs))
+        meta_X = list(np.array(meta_X).T)
+        print(meta_X)
 
 
-
-class SSEnsamble(object):
-    def __init__(self):
-        pass
-
-    def fit(self):
-        pass
-
-    def predict(self):
-        pass
-
-    def save_model(self):
-        pass
+if __name__ == '__main__':
+    prep = MetaClassifierDataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
+    prep.find_best_conf()
+    prep.learn_classifiers(0)
+    prep.get_dataset()
 
 
