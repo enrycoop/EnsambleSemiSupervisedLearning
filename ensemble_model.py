@@ -1,4 +1,5 @@
 from optimization import *
+import pickle
 import conf_models
 
 
@@ -16,6 +17,7 @@ class SemiSupervisedEnsambleClassifier(object):
         self.test_ys = test_ys.copy()
         self.ensembleManager = EnsembleManager(train_Xs, val_Xs, train_ys, val_ys, self.dataPreparator.indexer)
 
+
     def fit(self):
         ensemble = self.ensembleManager
         ensemble.find_best_conf()
@@ -31,13 +33,22 @@ class SemiSupervisedEnsambleClassifier(object):
         self.ensemble_test_Xs = ensemble_test_Xs.copy()
         opt = MetaOptimizer(self.ensemble_train_Xs.copy(),self.ensemble_test_Xs.copy(),
                             self.ensemble_train_ys.copy(),self.ensemble_test_ys.copy())
-        opt.fit()
+        conf = opt.fit()
+        self.neuralNetwork = opt.learn(self.ensemble_train_Xs[0]+self.ensemble_test_Xs[0],self.ensemble_train_ys[0]+self.ensemble_test_ys[0],conf)
 
-    def predict(self):
-        pass
+    def predict(self, X):
+        return self.neuralNetwork.predict(self.ensembleManager.get_results(X))
 
-    def save_model(self):
-        pass
+    def save_model(self, path):
+        with open(path, 'wb') as f:
+            # Pickle the 'data' dictionary using the highest protocol available.
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+    def load_model(self, path):
+        with open(path, 'rb') as f:
+            # The protocol version used is detected automatically, so we do not
+            # have to specify it.
+            return pickle.load(f)
 
 
 class EnsembleManager(object):

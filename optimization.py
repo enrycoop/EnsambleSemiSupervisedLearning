@@ -385,7 +385,7 @@ class MetaOptimizer(Optimizer):
                               loss='binary_crossentropy',
                               metrics=['accuracy'])
 
-                model.fit(train_X, train_y)
+                model.fit(train_X, train_y, epochs=epochs)
                 y_pred = model.predict(test_X).tolist()
 
                 # evaluating by accuracy #
@@ -418,8 +418,16 @@ class MetaOptimizer(Optimizer):
         print('FOUND BEST META CLASSIFIER PARAMETERS')
         return conf
 
-    def learn(self):
-        pass
+    def learn(self, X, y, conf):
+        model = Sequential()
+        model.add(Dense(conf[0], activation=conf[2], input_dim=len(X[0])))
+        model.add(Dense(1, activation='sigmoid'))
+        model.compile(optimizer='rmsprop',
+                      loss='binary_crossentropy',
+                      metrics=['accuracy'])
+
+        model.fit(X, y,epochs=conf[1])
+        return model
 
 
 if __name__ == '__main__':
