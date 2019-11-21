@@ -364,14 +364,14 @@ def boxplot(lists, labels=None, fontsize=15):
 
 
 if __name__ == '__main__':
-    prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
-    train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys, final_X, final_y = prep.createSperimentationData()
+    """prep = DataPreparator('resources/unlabeled.arff', 'resources/labeled.arff')
+    train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys = prep.createSperimentationData()
     print(train_Xs[0][-2])
     print(val_Xs[0][-2])
     print(test_Xs[0][-2])
     print(train_ys[0][-2])
     print(val_ys[0][-2])
-    print(test_ys[0][-2])
-    print(final_X[-2])
-    print(final_y[-2])
+    print(test_ys[0][-2])"""
+
+
 
