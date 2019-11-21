@@ -6,6 +6,8 @@ from data_preparation import *
 from pomegranate.distributions import *
 from sklearn.semi_supervised import label_propagation
 import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
 import conf_models
 
 
@@ -352,13 +354,71 @@ class ClusSSLOptimizer(Optimizer):
 
 
 class MetaOptimizer(Optimizer):
+
     def __init__(self, train_Xs, val_Xs, train_ys, val_ys):
         super().__init__(train_Xs, val_Xs, train_ys, val_ys)
 
-    def learn(self):
-        pass
+    def fit(self, activations=('relu','sigmoid'),min_hidden_units=4,max_hidden_units=30,hidden_step=1,min_epochs=4,max_epochs=500,epochs_step=100,verbose=True):
+        acc_ones = []
+        acc_zeros = []
+        accs = []
+        if verbose:
+            print('-----------------------------------START META-CLASSIFIER OPTIMIZATION------------------------------------')
+        best = dict()
+        for (hidden_units, epochs,activation) in [(hidden_units, epochs, activation) for hidden_units in range(min_hidden_units,max_hidden_units+1,hidden_step)
+                                       for epochs in range(min_epochs,max_epochs+1,epochs_step)
+                                       for activation in activations]:
+            metric = []
+            for i in range(self.K):
+                # copying data
+                train_X = np.array(self.train_Xs[i].copy())
+                train_y = np.array(self.train_ys[i].copy())
 
-    def fit(self):
+                test_X = np.array(self.val_Xs[i].copy())
+                test_y = np.array(self.val_ys[i].copy())
+
+                # building model
+                model = Sequential()
+                model.add(Dense(hidden_units, activation=activation, input_dim=len(train_X[0])))
+                model.add(Dense(1, activation='sigmoid'))
+                model.compile(optimizer='rmsprop',
+                              loss='binary_crossentropy',
+                              metrics=['accuracy'])
+
+                model.fit(train_X, train_y)
+                y_pred = model.predict(test_X).tolist()
+
+                # evaluating by accuracy #
+                # counting respectively True Positives, True Negatives and Correct count values
+                ones = [(x, y) for (x, y) in zip(y_pred, test_y) if x == y and y == 1.0]
+                zeros = [(x, y) for (x, y) in zip(y_pred, test_y) if x == y and y == 0.0]
+                nc = [(x, y) for (x, y) in zip(y_pred, test_y) if x == y]
+
+                one = list(test_y).count(1.0)
+                zero = list(test_y).count(0.0)
+
+                # accuracy calculation
+                if verbose:
+                    print(f'{i} - fold')
+
+                acc_ones.append(division(len(ones), one))
+                acc_zeros.append(division(len(zeros), zero))
+                accs.append(division(len(nc), len(y_pred)))
+                metric.append(avg([division(len(ones), one), division(len(zeros), zero)]))
+            best.setdefault(avg(metric), (hidden_units, epochs,activation))
+            if verbose:
+                print(f'----------------------{(hidden_units, epochs,activation)}----------------------------')
+                print(f'total one: {avg(acc_ones)}')
+                print(f'total zero: {avg(acc_zeros)}')
+                print(f'total accuracy: {geo_avg(accs)}')
+        conf = best.get(np.array(list(best.keys())).max())
+        if verbose:
+            print('-----------------------------------RESUME META-CLASSIFIER OPTIMIZATION------------------------------------')
+            print(f"best hidden units: {conf[0]} - best epochs: {conf[1]} - best activation function {conf[2]}")
+        print('FOUND BEST META CLASSIFIER PARAMETERS')
+        return conf
+
+    def learn(self):
         pass
 
 

@@ -1,10 +1,3 @@
-import os
-import susi
-import subprocess
-from pomegranate import *
-from data_preparation import *
-from pomegranate.distributions import *
-from sklearn.semi_supervised import label_propagation
 from optimization import *
 import conf_models
 
@@ -26,10 +19,19 @@ class SemiSupervisedEnsambleClassifier(object):
     def fit(self):
         ensemble = self.ensembleManager
         ensemble.find_best_conf()
+        ensemble_train_Xs = []
+        self.ensemble_train_ys = self.val_ys.copy()
+        ensemble_test_Xs = []
+        self.ensemble_test_ys = self.test_ys.copy()
         for i in range(self.K):
             ensemble.learn_classifiers(i)
-            X = ensemble.get_results(self.val_Xs[i])
-            test_X = ensemble.get_results(self.test_Xs[i])
+            ensemble_train_Xs.append(ensemble.get_results(self.val_Xs[i]))
+            ensemble_test_Xs.append(ensemble.get_results(self.test_Xs[i]))
+        self.ensemble_train_Xs = ensemble_train_Xs.copy()
+        self.ensemble_test_Xs = ensemble_test_Xs.copy()
+        opt = MetaOptimizer(self.ensemble_train_Xs.copy(),self.ensemble_test_Xs.copy(),
+                            self.ensemble_train_ys.copy(),self.ensemble_test_ys.copy())
+        opt.fit()
 
     def predict(self):
         pass
@@ -52,26 +54,24 @@ class EnsembleManager(object):
     def find_best_conf(self):
         self.knn_conf = self.knn.fit(verbose=False)
         self.pom_conf = self.pom.fit(verbose=False)
-        #self.susi_conf = self.susi.fit(verbose=False)
-        #self.clus_conf = self.clus.fit()
+        self.susi_conf = self.susi.fit(verbose=False)
+        self.clus_conf = self.clus.fit()
 
     def learn_classifiers(self, i):
         self.knn_model = self.knn.learn(i, self.knn_conf)
         self.pom_model = self.pom.learn(i, self.pom_conf)
-        #self.susi_model = self.susi.learn(i, self.susi_conf)
-        #self.clus.learn(i, self.clus_conf)
+        self.susi_model = self.susi.learn(i, self.susi_conf)
+        self.clus.learn(i, self.clus_conf)
 
     def get_results(self, X):
         meta_X = []
         meta_X.append(self.knn_model.predict(X))
         meta_X.append(self.pom_model.predict(X))
-        #meta_X.append(self.susi_model.predict(X))
-        #meta_X.append(self.clus.predict(X))
-        meta_X = list(np.array(meta_X).T)
-        ret_list = []
-        for x in meta_X:
-            ret_list.append(list(x))
-        return ret_list
+        meta_X.append(self.susi_model.predict(X))
+        meta_X.append(self.clus.predict(X))
+        meta_X = np.array(meta_X).T.tolist()
+
+        return meta_X
 
 
 if __name__ == '__main__':
