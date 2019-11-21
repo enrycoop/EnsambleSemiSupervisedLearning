@@ -380,6 +380,8 @@ class MetaOptimizer(Optimizer):
                 # building model
                 model = Sequential()
                 model.add(Dense(hidden_units, activation=activation, input_dim=len(train_X[0])))
+                model.add(Dense(hidden_units, activation=activation))
+                model.add(Dense(hidden_units, activation=activation))
                 model.add(Dense(1, activation='sigmoid'))
                 model.compile(optimizer='rmsprop',
                               loss='binary_crossentropy',
