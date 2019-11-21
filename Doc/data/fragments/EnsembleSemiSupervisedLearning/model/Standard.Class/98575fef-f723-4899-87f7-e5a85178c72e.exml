@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="SSEnsamble" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="SemiSupervisedEnsambleClassifier" version="4">
   <OBJECT>
-    <ID name="SSEnsamble" mc="Standard.Class" uid="98575fef-f723-4899-87f7-e5a85178c72e"/>
+    <ID name="SemiSupervisedEnsambleClassifier" mc="Standard.Class" uid="98575fef-f723-4899-87f7-e5a85178c72e"/>
     <PID name="ensamble_model" mc="Standard.Package" uid="250b1789-9802-4daf-9ee5-b9f1cc0ba0b8"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
@@ -11,7 +11,7 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[SSEnsamble]]></ATT>
+      <ATT name="Name"><![CDATA[SemiSupervisedEnsambleClassifier]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>

@@ -14,7 +14,7 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedElement">
-        <COMPID name="SSEnsamble" mc="Standard.Class" uid="98575fef-f723-4899-87f7-e5a85178c72e"/>
+        <COMPID name="SemiSupervisedEnsambleClassifier" mc="Standard.Class" uid="98575fef-f723-4899-87f7-e5a85178c72e"/>
         <COMPID name="MetaClassifierDataPreparator" mc="Standard.Class" uid="3e9f6f93-d88b-4b3f-b5c1-0d98e98448dc"/>
       </COMP>
     </DEPENDENCIES>
