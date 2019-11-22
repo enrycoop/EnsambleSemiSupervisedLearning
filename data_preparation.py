@@ -24,11 +24,14 @@ class DataPreparator(object):
         for i in range(K):
             validationSplitBalanced(f'5_fold/train{i}.arff', val_split, arff)
         print('file created.')
-        #aggiorna entrambid
+
         # extracting in memory files #
+
         X, y = extractXy(self.labeled_path)
+        nom_indexes = [1, 5, 12]
+        num_indexes = [x for x in range(len(X[0])) if x not in nom_indexes]
         self.indexer = NominalIndexer(X)
-        self.indexer.fit([1, 5, 12])
+        self.indexer.fit(nom_indexes)
 
         # extract unlabeled data from file
         try:
@@ -50,24 +53,24 @@ class DataPreparator(object):
         for i in range(K):
             # train data
             X, y = extractXy(f'{K}_fold/train{i}.arff')
-            train_Xs.append(self.indexer.nominalToNumeric(X=X+un_X).copy())
+            train_Xs.append(NormalizerWrapper(self.indexer.nominalToNumeric(X=X+un_X)).trasform(indexes=num_indexes))
             train_ys.append((y+un_y).copy())
 
             # test data
             X, y = extractXy(f'{K}_fold/test{i}.arff')
-            test_Xs.append(self.indexer.nominalToNumeric(X=X).copy())
+            test_Xs.append(NormalizerWrapper(self.indexer.nominalToNumeric(X=X)).trasform(indexes=num_indexes))
             test_ys.append(y.copy())
 
 
             # validation data
             X, y = extractXy(f'{K}_fold/validation_train{i}.arff')
-            val_Xs.append(self.indexer.nominalToNumeric(X=X).copy())
+            val_Xs.append(NormalizerWrapper(self.indexer.nominalToNumeric(X=X)).trasform(indexes=num_indexes))
             val_ys.append(y.copy())
 
         return train_Xs, val_Xs, test_Xs, train_ys, val_ys, test_ys
 
 
-class Normalizer(object):
+class NormalizerWrapper(object):
 
     """
     Abstract Normalizer for data
