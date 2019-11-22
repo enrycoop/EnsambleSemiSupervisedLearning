@@ -24,7 +24,7 @@ class DataPreparator(object):
         for i in range(K):
             validationSplitBalanced(f'5_fold/train{i}.arff', val_split, arff)
         print('file created.')
-        #aggiorna entrambi
+        #aggiorna entrambid
         # extracting in memory files #
         X, y = extractXy(self.labeled_path)
         self.indexer = NominalIndexer(X)
