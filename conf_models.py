@@ -15,7 +15,7 @@ def aggregate(predictions):
 
 
 def ensemble(xs):
-	base_predictions = [None for _ in range(10)]
+	base_predictions = [None for _ in range(25)]
 	for i in range(len(base_predictions)):
 		tree = eval("conf_trees.tree_{}".format(i + 1))
 		base_predictions[i] = tree(xs)

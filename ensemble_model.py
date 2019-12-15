@@ -60,26 +60,26 @@ class EnsembleManager(object):
         self.knn = KnnOptimizer(train_Xs, val_Xs, train_ys, val_ys)
         self.pom = PomOptimizer(train_Xs, val_Xs, train_ys, val_ys)
         #self.susi = SusiOptimizer(train_Xs, val_Xs, train_ys, val_ys)
-        #self.clus = ClusSSLOptimizer(train_Xs, val_Xs, train_ys, val_ys, indexer)
+        self.clus = ClusSSLOptimizer(train_Xs, val_Xs, train_ys, val_ys, indexer)
 
     def find_best_conf(self):
         self.knn_conf = self.knn.fit(verbose=False)
         self.pom_conf = self.pom.fit(verbose=False)
-        #self.susi_conf = self.susi.fit(verbose=False)
-        #self.clus_conf = self.clus.fit()
+        #self.susi_conf = self.susi.fit(verbose=True)
+        self.clus_conf = self.clus.fit(heuristics=('GainRatio', 'Gain'))
 
     def learn_classifiers(self, i):
         self.knn_model = self.knn.learn(i, self.knn_conf)
         self.pom_model = self.pom.learn(i, self.pom_conf)
         #self.susi_model = self.susi.learn(i, self.susi_conf)
-        #self.clus.learn(i, self.clus_conf)
+        self.clus.learn(i, self.clus_conf)
 
     def get_results(self, X):
         meta_X = []
         meta_X.append(self.knn_model.predict(X))
         meta_X.append(self.pom_model.predict(X))
         #meta_X.append(self.susi_model.predict(X))
-        #meta_X.append(self.clus.predict(X))
+        meta_X.append(self.clus.predict(X))
         meta_X = np.array(meta_X).T.tolist()
 
         return meta_X

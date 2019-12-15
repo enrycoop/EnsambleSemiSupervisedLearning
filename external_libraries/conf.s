@@ -3,8 +3,8 @@ RandomSeed = 1
 Verbose = 0
 
 [Data]
-File = 5_fold/train0.arff
-TestSet = 5_fold/test0.arff
+File = 5_fold/train4.arff
+TestSet = 5_fold/test4.arff
 
 [Attributes]
 Target = 14
@@ -16,11 +16,11 @@ Weights = Normalize
 Heuristic = GainRatio
 
 [Ensemble]
-Iterations = 10
+Iterations = 25
 EnsembleMethod = RForest
 
 [SemiSupervised]
-Iterations = 5
+Iterations = 10
 ConfidenceMeasure = RandomGaussian
 UnlabeledData = resources/unlabeled.arff
 SemiSupervisedMethod = PCT

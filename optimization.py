@@ -1,5 +1,7 @@
 import susi
 import subprocess
+
+
 from utilities import *
 from pomegranate import *
 from data_preparation import *
@@ -33,7 +35,7 @@ class KnnOptimizer(Optimizer):
         train_y = self.train_ys[i].copy()
         return label_propagation.LabelSpreading(kernel='knn', n_neighbors=conf[0], alpha=conf[1]).fit(train_X,train_y)
 
-    def fit(self, min_k=1, max_k=2, verbose=True):
+    def fit(self, min_k=1, max_k=9, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -264,7 +266,7 @@ class ClusSSLOptimizer(Optimizer):
             if 'ensemble' in line:
                 return int(line.split('_')[1].split('(')[0])
 
-    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=5, max_iter_unsup=6, min_iter_sup=10, max_iter_sup=11, verbose=True):
+    def fit(self, heuristics=('GainRatio', 'Gain', 'VarianceReduction'), min_iter_unsup=10, max_iter_unsup=50,step_unsup =10, min_iter_sup=25, max_iter_sup=50,step_sup=25, verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
@@ -272,10 +274,8 @@ class ClusSSLOptimizer(Optimizer):
             print('-----------------------------------START SUSI OPTIMIZATION------------------------------------')
         best = dict()
         for (heuristic, iter_un, iter_su) in [(x, a, b) for x in heuristics
-                                              for a in range(min_iter_unsup, max_iter_unsup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 1)) # da mettere 3 al posto di 1
-                                              for b in range(min_iter_sup, max_iter_sup + 1,
-                                                             round((max_iter_unsup - min_iter_unsup) / 1))]: # da mettere 3 al posto di 1
+                                              for a in range(min_iter_unsup, max_iter_unsup + 1,step_unsup) # da mettere 3 al posto di 1
+                                              for b in range(min_iter_sup, max_iter_sup + 1, step_sup)]: # da mettere 3 al posto di 1
             metric = []
             for i in range(self.K):
                 test_X = self.val_Xs[i].copy()
@@ -358,16 +358,16 @@ class MetaOptimizer(Optimizer):
     def __init__(self, train_Xs, val_Xs, train_ys, val_ys):
         super().__init__(train_Xs, val_Xs, train_ys, val_ys)
 
-    def fit(self, activations=('relu','sigmoid'),min_hidden_units=4,max_hidden_units=30,hidden_step=1,min_epochs=4,max_epochs=500,epochs_step=100,verbose=True):
+    def fit(self, activations=('relu'),min_hidden_units=200,max_hidden_units=700,hidden_step=100,min_epochs=100,max_epochs=500,epochs_step=100,verbose=True):
         acc_ones = []
         acc_zeros = []
         accs = []
         if verbose:
             print('-----------------------------------START META-CLASSIFIER OPTIMIZATION------------------------------------')
         best = dict()
-        for (hidden_units, epochs,activation) in [(hidden_units, epochs, activation) for hidden_units in range(min_hidden_units,max_hidden_units+1,hidden_step)
+        for (hidden_units, epochs) in [(hidden_units, epochs) for hidden_units in range(min_hidden_units,max_hidden_units+1,hidden_step)
                                        for epochs in range(min_epochs,max_epochs+1,epochs_step)
-                                       for activation in activations]:
+                                       ]:
             metric = []
             for i in range(self.K):
                 # copying data
@@ -379,9 +379,9 @@ class MetaOptimizer(Optimizer):
 
                 # building model
                 model = Sequential()
-                model.add(Dense(hidden_units, activation=activation, input_dim=len(train_X[0])))
-                model.add(Dense(hidden_units, activation=activation))
-                model.add(Dense(hidden_units, activation=activation))
+                model.add(Dense(hidden_units, activation='relu', input_dim=len(train_X[0])))
+                model.add(Dense(hidden_units, activation='relu'))
+                model.add(Dense(hidden_units, activation='relu'))
                 model.add(Dense(1, activation='sigmoid'))
                 model.compile(optimizer='rmsprop',
                               loss='binary_crossentropy',
@@ -407,22 +407,24 @@ class MetaOptimizer(Optimizer):
                 acc_zeros.append(division(len(zeros), zero))
                 accs.append(division(len(nc), len(y_pred)))
                 metric.append(avg([division(len(ones), one), division(len(zeros), zero)]))
-            best.setdefault(avg(metric), (hidden_units, epochs,activation))
+            best.setdefault(avg(metric), (hidden_units, epochs))
             if verbose:
-                print(f'----------------------{(hidden_units, epochs,activation)}----------------------------')
+                print(f'----------------------{(hidden_units, epochs)}----------------------------')
                 print(f'total one: {avg(acc_ones)}')
                 print(f'total zero: {avg(acc_zeros)}')
                 print(f'total accuracy: {geo_avg(accs)}')
         conf = best.get(np.array(list(best.keys())).max())
         if verbose:
             print('-----------------------------------RESUME META-CLASSIFIER OPTIMIZATION------------------------------------')
-            print(f"best hidden units: {conf[0]} - best epochs: {conf[1]} - best activation function {conf[2]}")
+            print(f"best hidden units: {conf[0]} - best epochs: {conf[1]} - best activation function")
         print('FOUND BEST META CLASSIFIER PARAMETERS')
         return conf
 
     def learn(self, X, y, conf):
         model = Sequential()
-        model.add(Dense(conf[0], activation=conf[2], input_dim=len(X[0])))
+        model.add(Dense(conf[0], activation='relu', input_dim=len(X[0])))
+        model.add(Dense(conf[0], activation='relu'))
+        model.add(Dense(conf[0], activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
         model.compile(optimizer='rmsprop',
                       loss='binary_crossentropy',
